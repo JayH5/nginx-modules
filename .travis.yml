@@ -26,7 +26,6 @@ before_script:
   - image="$IMAGE_NAME:$VARIANT"
   - dockerfile="$VARIANT.dockerfile"
   - version="$(awk '$2 == "NGINX_VERSION" { print $3; exit }' $dockerfile)"
-  - tag_version="${version%~*}-$VARIANT"
   - echo "Building image '$image' with Nginx version '$version'..."
   - docker pull "$image" || true
 
@@ -47,6 +46,6 @@ deploy:
       tags: true
       condition: -z $SKIP_BUILD
   - provider: script
-    script: dcd --version "$tag_version" --version-latest --tag '' -- "$image"
+    script: dcd --version "${version%~*}" --version-latest --tag "$VARIANT" -- "$image"
     on:
       branch: master
