@@ -22,4 +22,4 @@ Currently modules are **only built for Debian Jessie** (8). It is our intention 
 * [Nginx Lua module](https://github.com/openresty/lua-nginx-module) (`ngx_http_lua_module`)
 
 ## Build artifacts
-This repo is built by Travis CI and produces both a set of compiled module shared libraries (`.so` files) and the built Docker images used to produce those modules. The modules are available from the [Releases page](https://github.com/praekeltfoundation/nginx-modules/releases), while the Docker images are available on [Docker Hub](https://hub.docker.com/r/praekeltfoundation/nginx-module-builder).
+This repo is built by [Travis CI](https://travis-ci.org/praekeltfoundation/nginx-modules) and produces both a set of compiled module shared libraries (`.so` files) and the built Docker images used to produce those modules. The modules are available from the [Releases page](https://github.com/praekeltfoundation/nginx-modules/releases), while the Docker images are available on [Docker Hub](https://hub.docker.com/r/praekeltfoundation/nginx-module-builder).
