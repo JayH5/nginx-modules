@@ -1,8 +1,9 @@
 #!/usr/bin/env sh
 set -e
 
-# Default to running build.sh if the first arg isn't an executable
-if ! command -v "$1" &> /dev/null && ! [ \( -f "$1" -a -x "$1" \) ]; then
+# Default to running build.sh if the first arg is a directory or file that is
+# not executable
+if [ -d "$1" ] || [ \( -f "$1" -a ! -x "$1" \) ]; then
     set -- /build.sh "$@"
 fi
 
