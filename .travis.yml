@@ -2,6 +2,12 @@ sudo: required
 services: docker
 language: python
 
+branches:
+  only:
+    - master
+    # By decree: modules will be built when tagged with the date
+    - /^\d{4}-\d{2}-\d{2}/
+
 env:
   global:
     - IMAGE_NAME=praekeltfoundation/nginx-module-builder
