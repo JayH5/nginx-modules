@@ -32,7 +32,7 @@ before_script:
 
 script:
   - travis_retry docker build --pull --cache-from "$image" -t "$image" -f $dockerfile .
-  - '[ -n $SKIP_BUILD ] || ci/run.sh "$image"'
+  -  if [ -z "$SKIP_BUILD" ]; then ci/run.sh "$image"; fi
 
 before_deploy:
   - docker login -u "$REGISTRY_USER" -p "$REGISTRY_PASS"
