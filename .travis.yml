@@ -1,0 +1,46 @@
+sudo: required
+services: docker
+language: python
+
+env:
+  global:
+    - IMAGE_NAME=praekeltfoundation/nginx-module-builder
+    - REGISTRY_USER=praekeltorgdeploy
+    - REGISTRY_PASS=todo
+  matrix:
+    - VARIANT=jessie  SKIP_BUILD=
+    # No OpenSSL 1.1.0 support in lua-nginx-module:
+    # https://github.com/openresty/lua-nginx-module/issues/757
+    # Build the Docker image, but not the modules.
+    - VARIANT=stretch SKIP_BUILD=1
+
+install: []
+
+before_script:
+  - image="$IMAGE_NAME:$VARIANT"
+  - dockerfile="$VARIANT.dockerfile"
+  - version="$(awk '$2 == "NGINX_VERSION" { print $3; exit }' $dockerfile)"
+  - tag_version="${version%~*}-$VARIANT"
+  - echo "Building image '$image' with Nginx version '$version'..."
+  - docker pull "$image" || true
+
+script:
+  - travis_retry docker build --pull --cache-from "$image" -t "$image" -f $dockerfile .
+  - '[ -n $SKIP_BUILD ] || ci/run.sh "$image"'
+
+before_deploy:
+  - docker login -u "$REGISTRY_USER" -p "$REGISTRY_PASS"
+  - pip install docker-ci-deploy
+deploy:
+  - provider: releases
+    api_key:
+      secret: todo
+    file: out/*
+    skip_cleanup: true
+    on:
+      tags: true
+      condition: -z $SKIP_BUILD
+  - provider: script
+    script: dcd --version "$tag_version" --version-latest --tag '' -- "$image"
+    on:
+      branch: master
