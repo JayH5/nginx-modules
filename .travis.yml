@@ -12,7 +12,7 @@ env:
   global:
     - IMAGE_NAME=jamiehewland/nginx-module-builder
     - REGISTRY_USER=jamiehewland
-    - secure: "sxf7zFVvtYZQ7+AoblQ1lNTylNFIY0ahdwMfEzfK7yXeGNTxIpNZJCWeWPtVr+FwUHszgfpButr1QcTEpQWJ+9LCytJ5dL56oO4HvulzI+VMvRbONpxPVzJbpv9YxgnhZ0GdHWodjmc8sosfwtRztg+3CpiGZhBkgQkREhm63VHVkOwst1rZjoh0ybt6yOKnRrE8/ve9rWqI6WwwbKLKAA8eELeCFUsq/F6ryB353gr9IdSoFYyHh7ax/JvPMcrwKvZtMO+70BS4nEgOsB57MyLHPG/y/OhPlVGUBZKa3zaoPRTyjJO8sP68s6BJFEGABLuZKlPVHpsnKAd8QJ5DsotseOlqBef5WpT41zP8EFaLN0E2aSJWHrPgYo7Vka9Wint/3G/pOt6GsgAPq5IvBnOTxR0SjSh/Vl/QFWLziz8sjpCvBDJ2Lwlj1G/CMsAJqiiAQi/j6Vqi0ZFG4uugA5g69mRJu8UKdGrdtSqL4INVyUQt2UTgTt7LGGusgNErVwFTQXeyGOo7TvN0DuYasopdzTn/5FAjWxyWaH5nDJLrxTZqQAeQsXVpHL3k4qpAl8/7IcQMVBkOZyP2DxGNJBg/P9XN5RkE+UvhRdxNXJG2t2o2aXqTLHfst4Zv0BiPrPqsGBOdtECvHNZ2X2R3lWnbBtTA5YsOmHnQ4UsNgr4="
+    - secure: sxf7zFVvtYZQ7+AoblQ1lNTylNFIY0ahdwMfEzfK7yXeGNTxIpNZJCWeWPtVr+FwUHszgfpButr1QcTEpQWJ+9LCytJ5dL56oO4HvulzI+VMvRbONpxPVzJbpv9YxgnhZ0GdHWodjmc8sosfwtRztg+3CpiGZhBkgQkREhm63VHVkOwst1rZjoh0ybt6yOKnRrE8/ve9rWqI6WwwbKLKAA8eELeCFUsq/F6ryB353gr9IdSoFYyHh7ax/JvPMcrwKvZtMO+70BS4nEgOsB57MyLHPG/y/OhPlVGUBZKa3zaoPRTyjJO8sP68s6BJFEGABLuZKlPVHpsnKAd8QJ5DsotseOlqBef5WpT41zP8EFaLN0E2aSJWHrPgYo7Vka9Wint/3G/pOt6GsgAPq5IvBnOTxR0SjSh/Vl/QFWLziz8sjpCvBDJ2Lwlj1G/CMsAJqiiAQi/j6Vqi0ZFG4uugA5g69mRJu8UKdGrdtSqL4INVyUQt2UTgTt7LGGusgNErVwFTQXeyGOo7TvN0DuYasopdzTn/5FAjWxyWaH5nDJLrxTZqQAeQsXVpHL3k4qpAl8/7IcQMVBkOZyP2DxGNJBg/P9XN5RkE+UvhRdxNXJG2t2o2aXqTLHfst4Zv0BiPrPqsGBOdtECvHNZ2X2R3lWnbBtTA5YsOmHnQ4UsNgr4=
   matrix:
     - VARIANT=jessie  SKIP_BUILD=
     # No OpenSSL 1.1.0 support in lua-nginx-module:
@@ -28,10 +28,9 @@ before_script:
   - version="$(awk '$2 == "NGINX_VERSION" { print $3; exit }' $dockerfile)"
   - echo "Building image '$image' with Nginx version '$version'..."
   - docker pull "$image" || true
-
 script:
   - travis_retry docker build --pull --cache-from "$image" -t "$image" -f $dockerfile .
-  -  if [ -z "$SKIP_BUILD" ]; then ci/run.sh "$image"; fi
+  - if [ -z "$SKIP_BUILD" ]; then ci/run.sh "$image"; fi
 
 before_deploy:
   - docker login -u "$REGISTRY_USER" -p "$REGISTRY_PASS"
@@ -39,7 +38,7 @@ before_deploy:
 deploy:
   - provider: releases
     api_key:
-      secret: todo
+      secure: NEuMv16WKmWDSXu3Qm6kiWhwjiLurULly1BOkLsQWZC+R8vLW/SkUXMEUqaQi0XCmuMC1T1ZXYfQvCeBnYAOq/tTDtYT1PpEA4e3ioe1PCfFuE341sCRkpibceEchG3m8s3YQhWaCX0zm5pkWYh5QcUGpVkpEpcvbs8oiDwVloXONUpotF5sFeNF1JCDL9EjHHfuWtNk1q1SDWubxft3JX04DhznpDLpZ3GmzXgtA/Ddpjvws+Uy/0eQN6QUfD5ZrrIUdXkeCE6OSOnChnJ+okgqwZiQshCWA8Hfh+O9gUUI/J9i0/mdnuM/ehxu1q/f/cSHs26U0x3yLiB95EiDBvUYBxM2qK3sWxpnxyJOOUfhKX/TAMloO70MkBzHx3ivQS9tFZW6AYwP+JAEf5N0757bJWgZ1d0ZUTbH4rWwgwrN9LZt6JGRyXc6w8mijfIA06MmnikydRq2oLwgLfymaeYn41rAv9uj/jof1uyF1e3MZpkowWsrN1vefYTGkdQt2kC+GvYMoxNK+Ay2LvTyLnPAPyuApxyZ8NBh61aXGVHvwaKjfh4QKZ+voAWVtNPQCUYTpParecpIk7Cjk7erQmDzVuyaJm2e6hUGsncXbdjH59MCkJcGiTkRw59v8wMcWAeN20E3YAlcGkwcZhtptchm+lXqgL02B0/0ctMa1E0=
     file: out/*
     skip_cleanup: true
     on:
