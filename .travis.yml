@@ -10,8 +10,8 @@ branches:
 
 env:
   global:
-    - IMAGE_NAME=praekeltfoundation/nginx-module-builder
-    - REGISTRY_USER=praekeltorgdeploy
+    - IMAGE_NAME=jamiehewland/nginx-module-builder
+    - REGISTRY_USER=jamiehewland
     - REGISTRY_PASS=todo
   matrix:
     - VARIANT=jessie  SKIP_BUILD=
