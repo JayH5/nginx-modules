@@ -12,7 +12,7 @@ env:
   global:
     - IMAGE_NAME=jamiehewland/nginx-module-builder
     - REGISTRY_USER=jamiehewland
-    - REGISTRY_PASS=todo
+    - secure: "sxf7zFVvtYZQ7+AoblQ1lNTylNFIY0ahdwMfEzfK7yXeGNTxIpNZJCWeWPtVr+FwUHszgfpButr1QcTEpQWJ+9LCytJ5dL56oO4HvulzI+VMvRbONpxPVzJbpv9YxgnhZ0GdHWodjmc8sosfwtRztg+3CpiGZhBkgQkREhm63VHVkOwst1rZjoh0ybt6yOKnRrE8/ve9rWqI6WwwbKLKAA8eELeCFUsq/F6ryB353gr9IdSoFYyHh7ax/JvPMcrwKvZtMO+70BS4nEgOsB57MyLHPG/y/OhPlVGUBZKa3zaoPRTyjJO8sP68s6BJFEGABLuZKlPVHpsnKAd8QJ5DsotseOlqBef5WpT41zP8EFaLN0E2aSJWHrPgYo7Vka9Wint/3G/pOt6GsgAPq5IvBnOTxR0SjSh/Vl/QFWLziz8sjpCvBDJ2Lwlj1G/CMsAJqiiAQi/j6Vqi0ZFG4uugA5g69mRJu8UKdGrdtSqL4INVyUQt2UTgTt7LGGusgNErVwFTQXeyGOo7TvN0DuYasopdzTn/5FAjWxyWaH5nDJLrxTZqQAeQsXVpHL3k4qpAl8/7IcQMVBkOZyP2DxGNJBg/P9XN5RkE+UvhRdxNXJG2t2o2aXqTLHfst4Zv0BiPrPqsGBOdtECvHNZ2X2R3lWnbBtTA5YsOmHnQ4UsNgr4="
   matrix:
     - VARIANT=jessie  SKIP_BUILD=
     # No OpenSSL 1.1.0 support in lua-nginx-module:
