@@ -27,7 +27,9 @@ download_archive() {
 
 MODULES=()
 while read line; do
-	MODULES+=("$line")
+	if [[ "${line:0:1}" != '#' ]]; then
+		MODULES+=("$line")
+	fi
 done < "$modules_file"
 
 mkdir -p in
