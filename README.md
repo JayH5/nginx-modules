@@ -2,7 +2,7 @@
 
 [![GitHub release](https://img.shields.io/github/release/JayH5/nginx-modules.svg?style=flat-square)](https://github.com/JayH5/nginx-modules/releases)
 [![Docker Pulls](https://img.shields.io/docker/pulls/jamiehewland/nginx-module-builder.svg?style=flat-square)](https://hub.docker.com/r/jamiehewland/nginx-module-builder/)
-[![Travis branch](https://img.shields.io/travis/JayH5/nginx-modules/master.svg?style=flat-square)](https://travis-ci.org/JayH5/nginx-modules)
+[![Travis branch](https://img.shields.io/travis/JayH5/nginx-modules/develop.svg?style=flat-square)](https://travis-ci.org/JayH5/nginx-modules)
 
 Some Nginx dynamic modules and the Docker images used to build them 🏗
 
