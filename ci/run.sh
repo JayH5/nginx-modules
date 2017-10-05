@@ -59,6 +59,9 @@ docker run \
 nginx_version="$(docker inspect "$docker_image" | \
 	jq -r '.[].ContainerConfig.Env[] | scan("^NGINX_VERSION=(.*)")[]')"
 
+# GitHub Releases doesn't seem to support '~' characters in the filename
+nginx_version="${nginx_version/\~/-}"
+
 echo "Detected Nginx version '$nginx_version'"
 
 mkdir -p out
