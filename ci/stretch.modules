@@ -1,0 +1,4 @@
+simpl/ngx_devel_kit v0.3.0 ndk_http
+# No OpenSSL 1.1.0 support in lua-nginx-module:
+# https://github.com/openresty/lua-nginx-module/issues/757
+# openresty/lua-nginx-module v0.10.10 ngx_http_lua

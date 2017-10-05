@@ -14,11 +14,8 @@ env:
     - REGISTRY_USER=jamiehewland
     - secure: sxf7zFVvtYZQ7+AoblQ1lNTylNFIY0ahdwMfEzfK7yXeGNTxIpNZJCWeWPtVr+FwUHszgfpButr1QcTEpQWJ+9LCytJ5dL56oO4HvulzI+VMvRbONpxPVzJbpv9YxgnhZ0GdHWodjmc8sosfwtRztg+3CpiGZhBkgQkREhm63VHVkOwst1rZjoh0ybt6yOKnRrE8/ve9rWqI6WwwbKLKAA8eELeCFUsq/F6ryB353gr9IdSoFYyHh7ax/JvPMcrwKvZtMO+70BS4nEgOsB57MyLHPG/y/OhPlVGUBZKa3zaoPRTyjJO8sP68s6BJFEGABLuZKlPVHpsnKAd8QJ5DsotseOlqBef5WpT41zP8EFaLN0E2aSJWHrPgYo7Vka9Wint/3G/pOt6GsgAPq5IvBnOTxR0SjSh/Vl/QFWLziz8sjpCvBDJ2Lwlj1G/CMsAJqiiAQi/j6Vqi0ZFG4uugA5g69mRJu8UKdGrdtSqL4INVyUQt2UTgTt7LGGusgNErVwFTQXeyGOo7TvN0DuYasopdzTn/5FAjWxyWaH5nDJLrxTZqQAeQsXVpHL3k4qpAl8/7IcQMVBkOZyP2DxGNJBg/P9XN5RkE+UvhRdxNXJG2t2o2aXqTLHfst4Zv0BiPrPqsGBOdtECvHNZ2X2R3lWnbBtTA5YsOmHnQ4UsNgr4=
   matrix:
-    - VARIANT=jessie  SKIP_BUILD=
-    # No OpenSSL 1.1.0 support in lua-nginx-module:
-    # https://github.com/openresty/lua-nginx-module/issues/757
-    # Build the Docker image, but not the modules.
-    - VARIANT=stretch SKIP_BUILD=1
+    - VARIANT=jessie
+    - VARIANT=stretch
 
 install: []
 
@@ -30,7 +27,7 @@ before_script:
   - docker pull "$image" || true
 script:
   - travis_retry docker build --pull --cache-from "$image" -t "$image" -f $dockerfile .
-  - if [ -z "$SKIP_BUILD" ]; then ci/run.sh "$image"; fi
+  - ci/run.sh "ci/$VARIANT.modules" "$image"
 
 before_deploy:
   - docker login -u "$REGISTRY_USER" -p "$REGISTRY_PASS"
@@ -44,7 +41,6 @@ deploy:
     skip_cleanup: true
     on:
       tags: true
-      condition: -z $SKIP_BUILD
   - provider: script
     script: dcd --version "${version%~*}" --version-latest --tag "$VARIANT" -- "$image"
     on:

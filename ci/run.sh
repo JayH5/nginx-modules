@@ -1,19 +1,14 @@
 #!/usr/bin/env bash
 set -eo pipefail
 
-# repo,tag,soname
-MODULES=(
-	'simpl/ngx_devel_kit,v0.3.0,ndk_http'
-	'openresty/lua-nginx-module,v0.10.10,ngx_http_lua'
-)
-
 usage() {
 	cat <<-EOU
-		usage: $self [<docker-image>]
-		 e.g.: $self praekeltfoundation/nginx-module-builder
+		usage: $self <modules-file> <docker-image>
+		 e.g.: $self jessie.modules jamiehewland/nginx-module-builder
 	EOU
 }
 
+modules_file="$1"; shift || { usage >&2; exit 1; }
 docker_image="$1"; shift || { usage >&2; exit 1; }
 
 download_archive() {
@@ -30,12 +25,19 @@ download_archive() {
 	wget -O - "$url" | tar -xzC "in/$name" --strip-components=1
 }
 
+MODULES=()
+while read line; do
+	if [[ "${line:0:1}" != '#' ]]; then
+		MODULES+=("$line")
+	fi
+done < "$modules_file"
+
 mkdir -p in
 
 docker_volume_opts=()
 docker_source_args=()
 for module in "${MODULES[@]}"; do
-	parts=(${module//,/ })
+	parts=($module)
 
 	download_archive "${parts[0]}" "${parts[1]}"
 
@@ -61,7 +63,7 @@ echo "Detected Nginx version '$nginx_version'"
 
 mkdir -p out
 for module in "${MODULES[@]}"; do
-	parts=(${module//,/ })
+	parts=($module)
 
 	old_name="${parts[2]}_module"
 	new_name="${old_name}-${parts[1]}-${nginx_version}"
