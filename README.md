@@ -20,6 +20,7 @@ Currently modules are **only built for Debian Jessie** (8). It is our intention 
 ## Modules
 * [Nginx Development Kit](https://github.com/simpl/ngx_devel_kit) (`ndk_http_module`)
 * [Nginx Lua module](https://github.com/openresty/lua-nginx-module) (`ngx_http_lua_module`)
+* [Nginx virtual host traffic status module](https://github.com/vozlt/nginx-module-vts) (`ngx_http_vhost_traffic_status`)
 
 ## Build artefacts
 This repo is built by [Travis CI](https://travis-ci.org/JayH5/nginx-modules) and produces both a set of compiled module shared libraries (`.so` files) and the built Docker images used to produce those modules. The modules are available from the [Releases page](https://github.com/JayH5/nginx-modules/releases), while the Docker images are available on [Docker Hub](https://hub.docker.com/r/jamiehewland/nginx-module-builder).

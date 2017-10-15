@@ -1,4 +1,5 @@
-ndk_http simpl/ngx_devel_kit v0.3.0
+ndk_http                      simpl/ngx_devel_kit    v0.3.0
+ngx_http_vhost_traffic_status vozlt/nginx-module-vts v0.1.15
 # No OpenSSL 1.1.0 support in lua-nginx-module:
 # https://github.com/openresty/lua-nginx-module/issues/757
 # openresty/lua-nginx-module v0.10.10 ngx_http_lua
