@@ -39,9 +39,9 @@ docker_source_args=()
 for module in "${MODULES[@]}"; do
 	parts=($module)
 
-	download_archive "${parts[0]}" "${parts[1]}"
+	download_archive "${parts[1]}" "${parts[2]}"
 
-	name="${parts[0]#*/}"
+	name="${parts[1]#*/}"
 	docker_volume_opts+=(-v "$(pwd)/in/$name:/usr/src/$name")
 	docker_source_args+=("/usr/src/$name")
 done
@@ -65,8 +65,8 @@ mkdir -p out
 for module in "${MODULES[@]}"; do
 	parts=($module)
 
-	old_name="${parts[2]}_module"
-	new_name="${old_name}-${parts[1]}-${nginx_version}"
+	old_name="${parts[0]}_module"
+	new_name="${old_name}-${parts[2]}-${nginx_version}"
 	cp "objs/${old_name}.so" "out/${new_name}.so"
 
 	echo "Built 'out/$new_name.so'"
