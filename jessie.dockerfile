@@ -1,7 +1,7 @@
 FROM debian:jessie
 
 # Get the Nginx build deps, source, and config options
-ENV NGINX_VERSION 1.12.1-1~jessie
+ENV NGINX_VERSION 1.12.2-1~jessie
 ENV NGINX_GPG_KEY 573BFD6B3D8FBC641079A6ABABF5BD827BD9BF62
 RUN set -ex; \
 # Add the APT key & source
