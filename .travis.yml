@@ -31,7 +31,7 @@ script:
   - ci/run.sh "ci/$VARIANT.modules" "$image"
 
 before_deploy:
-  - docker login -u "$REGISTRY_USER" -p "$REGISTRY_PASS"
+  - echo "$REGISTRY_PASS" | docker login -u "$REGISTRY_USER" --password-stdin
   - pip install docker-ci-deploy
 deploy:
   - provider: releases

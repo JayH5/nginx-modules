@@ -6,7 +6,7 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 # Get the Nginx build deps, source, and config options
-ENV NGINX_VERSION 1.12.1-1~stretch
+ENV NGINX_VERSION 1.14.0-1~stretch
 ENV NGINX_GPG_KEY 573BFD6B3D8FBC641079A6ABABF5BD827BD9BF62
 RUN set -ex; \
 # Add the APT key & source
